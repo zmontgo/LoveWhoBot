@@ -1,11 +1,11 @@
 // Database requirements - Connection created at end
 const { MongoClient } = require('mongodb');
-const mongoURI = require('../config.json').mongodbURI;
+const config = require('../config.json');
 
 
 // Create connection
 const client = new MongoClient(
-  mongoURI,
+  config.mongoURI,
   { useUnifiedTopology: true }
 );
 
