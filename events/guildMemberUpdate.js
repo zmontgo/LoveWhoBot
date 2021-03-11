@@ -1,0 +1,35 @@
+const Discord = require('discord.js');
+const config = require('../config.json');
+
+module.exports = async (client, oldMember, newMember) => {
+  if (oldMember.pending && !newMember.pending) {
+    const memberrole = newMember.guild.roles.cache.find(role => role.id === '719660584806776884');
+    const ranksrole = newMember.guild.roles.cache.find(role => role.id === '719993182670159945');
+    const inforole = newMember.guild.roles.cache.find(role => role.id === '719677020677603361');
+    const genrerole = newMember.guild.roles.cache.find(role => role.id === '719991192393351179');
+    const pingsrole = newMember.guild.roles.cache.find(role => role.id === '725074194739757068');
+    try {
+      await newMember.roles.add(memberrole);
+      await newMember.roles.add(ranksrole);
+      await newMember.roles.add(inforole);
+      await newMember.roles.add(genrerole);
+      await newMember.roles.add(pingsrole);
+    } catch(err) {
+      console.log(err);
+    }
+
+    try {
+      // Add roles and send welcome message to the welcome channel
+      newMember.guild.channels.cache
+        .get(config.channels.welcome)
+        .send(
+          `🎉 **A new member has arrived!** 🎉\nPlease welcome <@${newMember.id}> to the **Love Who Discord** <@&738420217847218295> team!\nWe're so glad you've joined. :blush: **Introduce yourself here!** Please include what you'd like to be called, your preferred pronouns, your age (or whether you're below 18 years old or not), and a little about yourself.`
+        )
+        .then((message) => {
+          message.react(config.emotes.wave);
+        });
+    } catch (err) {
+      console.error(err);
+    }
+  }
+};
