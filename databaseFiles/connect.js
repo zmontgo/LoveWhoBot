@@ -11,5 +11,4 @@ const client = new MongoClient(
 
 client.connect();
 
-// Make sure MongoDB can be accessed outside of this file
-module.exports.client = client;
+module.exports.Afks = client.db(config.mongodbDatabase).collection('Afks');

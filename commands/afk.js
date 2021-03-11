@@ -1,5 +1,5 @@
 // Get the afk Table stored in the MongoDB database
-const mongo = require('../databaseFiles/connect.js').client;
+const Afks = require('../databaseFiles/connect.js').Afks;
 const config = require('../config.json');
 
 module.exports.execute = async (client, message, args) => {
@@ -29,7 +29,7 @@ module.exports.execute = async (client, message, args) => {
     afkMessage = "They didn't tell us where they went...";
   }
 
-  let result = await mongo.db(config.mongodbDatabase).collection('Afks').findOne({ user: sender.id });
+  let result = await Afks.findOne({ user: sender.id });
 
   if (result === null) {
     afkObject = {
@@ -39,7 +39,7 @@ module.exports.execute = async (client, message, args) => {
       date: Date.now()
     }
 
-    await mongo.db(config.mongodbDatabase).collection('Afks').insertOne(afkObject);
+    await Afks.insertOne(afkObject);
 
     try {
     message.channel
@@ -51,7 +51,7 @@ module.exports.execute = async (client, message, args) => {
       console.log(err);
     }
   } else {
-    await mongo.db(config.mongodbDatabase).collection('Afks').deleteOne({user: sender.id});
+    await Afks.deleteOne({user: sender.id});
 
     await message.channel
       .send(

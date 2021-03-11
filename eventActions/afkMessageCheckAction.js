@@ -1,5 +1,5 @@
 // Get the afk Table stored in the MongoDB database
-const mongo = require('../databaseFiles/connect.js').client;
+const Afks = require('../databaseFiles/connect.js').Afks;
 const Discord = require('discord.js');
 const config = require('../config.json');
 
@@ -29,7 +29,7 @@ class afkMessageCheckAction {
     ) {
       const sender = message.author;
 
-      await mongo.db(config.mongodbDatabase).collection('Afks').deleteOne({user: sender.id});
+      await Afks.deleteOne({user: sender.id});
 
       await message.channel
         .send(
@@ -49,8 +49,6 @@ class afkMessageCheckAction {
 			.setFooter('This message will delete itself after 15 seconds.')
 			.setColor(config.colors.embedColor);
 		const user = message.author;
-
-    let Afks = mongo.db(config.mongodbDatabase).collection('Afks');
 
     let result = await Afks.findOne({'user': user.id});
 
@@ -117,8 +115,6 @@ class afkMessageCheckAction {
     // Make sure the message is meant for the one person only. This also means the bot will not trigger on tag spams.
     if (message.mentions.members.size == 1) {
       let id = message.mentions.members.firstKey();
-
-      let Afks = mongo.db(config.mongodbDatabase).collection('Afks');
 
       let result = await Afks.findOne({'user': id});
 
