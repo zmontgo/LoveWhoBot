@@ -3,6 +3,7 @@ const Afks = require('../databaseFiles/connect.js').Afks;
 const config = require('../config.json');
 
 module.exports.execute = async (client, message, args) => {
+  return(message.channel.send('This command is currently broken due to database updates.'));
   try {
     if (
       message.content.toLowerCase().indexOf('good') != -1 &&
