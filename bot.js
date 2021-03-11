@@ -1,8 +1,9 @@
+'use strict';
+
 // Load dependencies
 const fs = require('fs');
 const Discord = require('discord.js');
 const config = require('./config.json');
-const connect = require('./databaseFiles/connect.js');
 
 Discord.Structures.extend('GuildMember', GuildMember => {
   class GuildMemberWithPending extends GuildMember {
@@ -61,8 +62,5 @@ fs.readdir('./commands/', (err, files) => {
     });
   });
 });
-
-// Connect to given database
-connect.instantiateConnection();
 
 client.login(config.botToken);
