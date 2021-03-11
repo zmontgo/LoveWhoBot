@@ -66,9 +66,11 @@ class afkMessageCheckAction {
 
       // Reset cooldown
       Afks.updateOne(
-        { user: user.id },
-        { cooldown: Date.now() },
-      ).catch((error) => {
+        { 'user': user.id },
+        { $set: { 'cooldown': Date.now() } },
+        { upset: true }
+      )
+      .catch((error) => {
         'Update error: ' + error;
       });
     }
