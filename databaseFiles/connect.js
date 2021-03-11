@@ -9,6 +9,6 @@ const client = new MongoClient(
   { useUnifiedTopology: true }
 );
 
-client.connect();
-
-module.exports.Afks = client.db(config.mongodbDatabase).collection('Afks');
+client.connect().then(() => {
+  module.exports.Afks = client.db(config.mongodbDatabase).collection('Afks');
+});
