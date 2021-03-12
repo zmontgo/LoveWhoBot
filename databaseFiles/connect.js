@@ -2,14 +2,13 @@
 const { MongoClient } = require('mongodb');
 const config = require('../config.json');
 
-async() => {
-  // Create connection
-  const client = new MongoClient(
-    config.mongoURI,
-    { useUnifiedTopology: true }
-  );
+// Create connection
+const client = new MongoClient(
+  config.mongodbURI,
+  { useUnifiedTopology: true }
+);
 
-  await client.connect();
+client.connect();
 
-  module.exports.Afks = client.db(config.mongodbDatabase).collection('Afks');
-}
+// Make sure MongoDB can be accessed outside of this file
+module.exports.Afks = client.db(config.mongodbDatabase).collection('Afks');
